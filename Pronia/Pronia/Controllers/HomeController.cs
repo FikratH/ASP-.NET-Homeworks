@@ -1,8 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Pronia.Context;
-using Pronia.Models;
-
-namespace Pronia.Controllers
+﻿namespace Pronia.Controllers
 {
     public class HomeController : Controller
     {
@@ -17,9 +13,12 @@ namespace Pronia.Controllers
         {
             List<Slider> sliders = _context.Sliders.ToList();
             List<Features> features = _context.Features.ToList();
-
-            ViewBag.Features = features;
-            return View(sliders);
+            HomeVM homeViewModel = new()
+            {
+                Sliders = sliders,
+                Features = features
+            };
+            return View(homeViewModel);
         }
     }
 }

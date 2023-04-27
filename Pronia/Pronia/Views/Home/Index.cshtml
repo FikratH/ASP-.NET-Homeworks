@@ -1,17 +1,15 @@
-﻿@using Pronia.Models;
-
-@{
+﻿@{
     ViewData["Title"] = "Home Index";
 }
 
-@model List<Slider>
+@model HomeVM;
 
       <!-- Begin Slider Area -->
       <div class="slider-area">
         <!-- Main Slider -->
         <div class="swiper-container main-slider swiper-arrow with-bg_white">
           <div class="swiper-wrapper">
-              @foreach (var item in Model)
+              @foreach (var item in Model.Sliders)
             {
 
                 <div class="swiper-slide animation-style-01">
@@ -63,7 +61,7 @@
         <div class="container">
           <div class="shipping-bg">
             <div class="row shipping-wrap">
-                @foreach (Features item in ViewBag.Features)
+                @foreach (Features item in Model.Features)
                 {
                     <div class="col-lg-4 col-md-6">
                 <div class="shipping-item">

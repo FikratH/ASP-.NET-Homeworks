@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "S7ZVZWY5togfXrH3gc5A0iTN2ybswSZ22sS5vbbSSNa3krinmh6J7Ugg5DW0mVKaxqe/ENT9c4Lu/pLymJ3Shg==",
+  "dgSpecHash": "pgrhoZc3x20FkyrGPnFsIW6xsuXbJ9unxeDNChYFYG8bFXJavM5U1hOdM5hl2k6RsRblVV1rxVUaaOgjUKDiEg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Fikre\\source\\repos\\Pronia\\Pronia\\Pronia.csproj",
+  "projectFilePath": "C:\\Users\\Fikre\\source\\repos\\ASP .NET\\Pronia\\Pronia\\Pronia.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Fikre\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\Fikre\\.nuget\\packages\\messagepack\\2.1.152\\messagepack.2.1.152.nupkg.sha512",
