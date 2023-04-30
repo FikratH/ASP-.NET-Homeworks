@@ -21390,7 +21390,7 @@ dl li {
 .navbar .navbar-brand-wrapper .navbar-brand-inner-wrapper .navbar-brand img {
   width: calc(257px - 150px);
   max-width: 100%;
-  height: 34px;
+  height: 55px;
   margin: auto;
   vertical-align: middle;
 }
@@ -21403,7 +21403,7 @@ dl li {
 }
 
 @media (max-width: 991px) {
-  .navbar .navbar-brand-wrapper .navbar-brand-inner-wrapper .navbar-toggler:not(.navbar-toggler-right) {
+    .navbar .navbar-brand-wrapper .navbar-brand-inner-wrapper .navbar-toggler:not(.navbar-toggler-right) {
     display: none;
   }
 }

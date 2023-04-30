@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace Pronia.Areas.Admin.Controllers
 {
@@ -14,6 +14,7 @@ namespace Pronia.Areas.Admin.Controllers
         public IActionResult Index()
         {
             List<Slider> sliders = _context.Sliders.ToList();
+            ViewBag.Count = sliders.Count;
             return View(sliders);
         }
 
@@ -24,9 +25,68 @@ namespace Pronia.Areas.Admin.Controllers
         [HttpPost]
         public IActionResult Create(Slider slider)
         {
+            if (!ModelState.IsValid)
+                return View();
+
+            if (slider.Offer < 0 || slider.Offer > 100)
+            {
+                ModelState.AddModelError("Offer", "Offer value must be between 0 and 100.");
+                return View();
+            }
             _context.Sliders.Add(slider);
             _context.SaveChanges();
-            return View();
+            return RedirectToAction(nameof(Index));
+        }
+        public IActionResult Detail(int id)
+        {
+
+            Slider? slider = _context.Sliders.AsNoTracking().FirstOrDefault(x => x.ID == id);
+            if (slider == null)
+                return NotFound();
+            return View(slider);
+        }
+        public IActionResult Delete(int id)
+        {
+            if (_context.Sliders.Count() == 1)
+            {
+                return BadRequest();
+            }
+            Slider? slider = _context.Sliders.FirstOrDefault(x => x.ID == id);
+            if (slider == null)
+                return NotFound();
+            return View(slider);
+        }
+        [HttpPost]
+        [ActionName("Delete")]
+        public IActionResult DeleteSlider(int id)
+        {
+            Slider? slider = _context.Sliders.FirstOrDefault(x => x.ID == id);
+            if (slider == null)
+                return NotFound();
+            _context.Sliders.Remove(slider);
+            _context.SaveChanges();
+            return RedirectToAction(nameof(Index));
+        }
+
+        public IActionResult Update(int id)
+        {
+            Slider? slider = _context.Sliders.FirstOrDefault(x => x.ID == id);
+            if (slider == null)
+                return NotFound();
+
+            return View(slider);
+        }
+
+        [HttpPost]
+        public IActionResult Update(Slider slider, int id)
+        {
+            Slider? dbSlider = _context.Sliders.AsNoTracking().FirstOrDefault(x => x.ID == id);
+            if (dbSlider == null)
+                return NotFound();
+
+            _context.Sliders.Update(slider);
+            _context.SaveChanges();
+            return RedirectToAction(nameof(Index));
         }
     }
 }

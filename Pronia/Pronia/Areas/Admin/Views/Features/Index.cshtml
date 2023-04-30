@@ -1,0 +1,56 @@
+﻿@{
+    ViewData["Title"] = "Features";
+}
+
+@model List<Features>
+
+<div class="content-wrapper">
+    <div class="row">
+    </div>
+    <div class="col-lg-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Features</h4>
+                <div class="table-responsive">
+                    @if (ViewBag.Count == 3)
+                    {
+                        <a class="btn btn-primary disabled" asp-action="Create">Create</a>
+                    }
+                    else
+                    {
+                        <a class="btn btn-primary" asp-action="Create">Create</a>
+                    }
+                    <table class="table">
+                        <thead>
+                            <tr style="display:flex; ">
+                                <th style="flex:1 1 25%">Image</th>
+                                <th style="flex:1 1 25%">Title</th>
+                                <th style="flex:1 1 25%">Description</th>
+                                <th style="flex:1 1 25%;text-align:center">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var FeatureItem in Model)
+                            {
+                                <tr style="display:flex">
+                                    <td style="flex:1 1 25%; display:flex; align-items:center;"><img src="~/assets/images/website-images/@FeatureItem.Image" /></td>
+                                    <td style="flex:1 1 25%; display:flex; align-items:center;">@FeatureItem.Title</td>
+                                    <td style="flex:1 1 25%; display:flex; align-items:center;">@FeatureItem.Description</td>
+                                    <td style="flex:1 1 25%; display:flex; align-items:center; justify-content:space-between">
+                                        <a class="btn btn-success" asp-action="Detail" asp-route-id="@FeatureItem.ID">Details</a>
+                                        <a class="btn btn-warning" asp-action="Update" asp-route-id="@FeatureItem.ID">Update</a>
+
+                                        <a class="btn btn-danger" asp-action="Delete" asp-route-id="@FeatureItem.ID">Delete</a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

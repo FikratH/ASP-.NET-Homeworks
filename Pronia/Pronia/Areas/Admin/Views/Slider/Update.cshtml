@@ -1,15 +1,15 @@
-﻿@{
-    ViewData["Title"] = "Create Slider";
-}
+﻿@model Slider
 
-@model Slider
+@{
+    ViewData["Title"] = "Update Slider";
+}
 
 <div class="content-wrapper">
     <div class="row">
         <div class="col-md-6 grid-margin stretch-card">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="card-title">Create Slider</h4>
+                    <h4 class="card-title">Update Slider</h4>
                     <form class="forms-sample" method="post">
                         <div class="form-group">
                             <label for="Image">Image</label>
@@ -30,7 +30,7 @@
                             <input class="form-control" asp-for="Offer" placeholder="Offer">
                             <span style="font-size:12px" asp-validation-for="Offer" class="text-danger"></span>
                         </div>
-                        <button type="submit" class="btn btn-primary mr-2">Submit</button>
+                        <button type="submit" class="btn btn-warning mr-2">Update</button>
                         <a class="btn btn-light" asp-action="Index">Cancel</a>
                     </form>
                 </div>
@@ -38,3 +38,4 @@
         </div>
     </div>
 </div>
+
