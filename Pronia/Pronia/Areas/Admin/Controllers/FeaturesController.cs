@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Pronia.Areas.Admin.ViewModels;
 
 namespace Pronia.Areas.Admin.Controllers
 {
@@ -7,9 +8,11 @@ namespace Pronia.Areas.Admin.Controllers
     public class FeaturesController : Controller
     {
         private readonly AppDbContext _context;
-        public FeaturesController(AppDbContext context)
+        private readonly IWebHostEnvironment _webHostEnvironment;
+        public FeaturesController(AppDbContext context, IWebHostEnvironment webHostEnvironment = null)
         {
             _context = context;
+            _webHostEnvironment = webHostEnvironment;
         }
         public IActionResult Index()
         {
@@ -23,7 +26,7 @@ namespace Pronia.Areas.Admin.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult Create(Features feature)
+        public async Task<IActionResult> Create(FeaturesViewModel featureVM)
         {
             if (!ModelState.IsValid)
                 return View();
@@ -33,12 +36,40 @@ namespace Pronia.Areas.Admin.Controllers
             //    return View();
             //}
 
-            Features? foundFeature = _context.Features.FirstOrDefault(x => x.Title == feature.Title);
+            Features? foundFeature = _context.Features.FirstOrDefault(x => x.Title == featureVM.Title);
             if (foundFeature != null)
             {
                 ModelState.AddModelError("Title", "This title already exists.");
                 return View();
             }
+            if (featureVM.Image == null)
+            {
+                ModelState.AddModelError("Image", "Please, upload an image!");
+                return View();
+            }
+            if (!featureVM.Image.ContentType.Contains("image/"))
+            {
+                ModelState.AddModelError("Image", "Please, upload an image!");
+                return View();
+            }
+            if (featureVM.Image.Length/1024 > 100)
+            {
+                ModelState.AddModelError("Image", "Image size can't exceed 100 kB");
+                return View();
+            }
+            string fileName =  $"{Guid.NewGuid()}-{featureVM.Image.FileName}";
+            string path = Path.Combine(_webHostEnvironment.WebRootPath, "assets", "images", "website-images", fileName);
+
+            using (FileStream stream = new(path, FileMode.Create)){
+                await featureVM.Image.CopyToAsync(stream);
+            }
+
+            Features feature = new()
+            {
+                Image = fileName,
+                Title = featureVM.Title,
+                Description = featureVM.Description,
+            };
             _context.Features.Add(feature);
             _context.SaveChanges();
             return RedirectToAction(nameof(Index));

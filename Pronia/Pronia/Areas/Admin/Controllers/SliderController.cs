@@ -13,13 +13,13 @@ namespace Pronia.Areas.Admin.Controllers
         }
         public IActionResult Index()
         {
-            List<Slider> sliders = _context.Sliders.ToList();
-            ViewBag.Count = sliders.Count;
+            IEnumerable<Slider> sliders = _context.Sliders;
+            ViewBag.Count = sliders.Count();
             return View(sliders);
         }
 
         public IActionResult Create()
-        {
+        {   
             return View();
         }
         [HttpPost]
