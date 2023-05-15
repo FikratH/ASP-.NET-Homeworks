@@ -1,6 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Pronia.Areas.Admin.ViewModels;
+using Pronia.Models;
+using Pronia.Utils;
+using Pronia.Utils.Enums;
 
 namespace Pronia.Areas.Admin.Controllers
 {
@@ -26,6 +29,7 @@ namespace Pronia.Areas.Admin.Controllers
             return View();
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(FeaturesViewModel featureVM)
         {
             if (!ModelState.IsValid)
@@ -47,12 +51,12 @@ namespace Pronia.Areas.Admin.Controllers
                 ModelState.AddModelError("Image", "Please, upload an image!");
                 return View();
             }
-            if (!featureVM.Image.ContentType.Contains("image/"))
+            if (featureVM.Image.CheckFileType(ContentType.image.ToString()))
             {
                 ModelState.AddModelError("Image", "Please, upload an image!");
                 return View();
             }
-            if (featureVM.Image.Length/1024 > 100)
+            if (!featureVM.Image.CheckFileSize(100))
             {
                 ModelState.AddModelError("Image", "Image size can't exceed 100 kB");
                 return View();
@@ -91,6 +95,7 @@ namespace Pronia.Areas.Admin.Controllers
         }
         [HttpPost]
         [ActionName("Delete")]
+        [ValidateAntiForgeryToken]
         public IActionResult DeleteFeature(int id)
         {
             Features? feature = _context.Features.FirstOrDefault(x => x.ID == id);
@@ -109,6 +114,7 @@ namespace Pronia.Areas.Admin.Controllers
             return View(feature);
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Update(Features feature, int id)
         {
             Features? dbFeature = _context.Features.AsNoTracking().FirstOrDefault(x => x.ID == id);

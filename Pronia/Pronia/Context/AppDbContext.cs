@@ -10,7 +10,9 @@ namespace Pronia.Context
                
         }
 
-        public DbSet<Slider> Sliders { get; set; }
-        public DbSet<Features> Features { get; set; }
+        public DbSet<Slider> Sliders { get; set; } = null!;
+        public DbSet<Features> Features { get; set; } = null!;
+        public DbSet<Category> Categories { get; set; } = null!;
+        public DbSet<Product> Products { get; set; } = null!;
     }
 }

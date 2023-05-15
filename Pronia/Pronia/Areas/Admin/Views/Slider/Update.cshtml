@@ -1,4 +1,5 @@
-﻿@model Slider
+﻿@using Pronia.Areas.Admin.ViewModels;
+@model SlidersViewModel;    
 
 @{
     ViewData["Title"] = "Update Slider";
@@ -10,10 +11,11 @@
             <div class="card">
                 <div class="card-body">
                     <h4 class="card-title">Update Slider</h4>
-                    <form class="forms-sample" method="post">
+                    <form class="forms-sample" method="post" enctype="multipart/form-data">
                         <div class="form-group">
                             <label for="Image">Image</label>
                             <input class="form-control" asp-for="Image" placeholder="Image">
+                            <span style="font-size:12px" asp-validation-for="Image" class="text-danger"></span>
                         </div>
                         <div class="form-group">
                             <label for="Title">Title</label>
